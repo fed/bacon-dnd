@@ -83,13 +83,14 @@ function getContainingColumn(pointerMoveEvent) {
   const columns = Array.from(document.querySelectorAll('.board__column'));
 
   for (let i = 0; i < columns.length; i++) {
-    const columnRect = columns[i].getBoundingClientRect();
+    const column = columns[i];
+    const columnRect = column.getBoundingClientRect();
     const isContained =
       pointerMoveEvent.clientX >= columnRect.left &&
       pointerMoveEvent.clientX <= columnRect.left + columnRect.width;
 
     if (isContained) {
-      return columns[i];
+      return column;
     }
   }
 
