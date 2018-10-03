@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Drag and Drop with Bacon.js</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <ul class="board">
+    <li class="board__column">
+      <span class="board__column-name">To Do</span>
+      <ul class="board__inner-column">
+        <li class="board__card" data-id="1A">Go shopping</li>
+        <li class="board__card" data-id="1B">Play ping pong</li>
+        <li class="board__card" data-id="1C">Learn Bacon.js</li>
+      </ul>
+    </li>
+    <li class="board__column">
+      <span class="board__column-name">In Progress</span>
+      <ul class="board__inner-column">
+        <li class="board__card" data-id="2A">Drink a beer or two</li>
+      </ul>
+    </li>
+  </ul>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bacon.js/2.0.9/Bacon.min.js"></script>
+  <script src="app.js"></script>
+  <!-- <script src="step-by-step/01.js"></script> -->
+  <!-- <script src="step-by-step/02.js"></script> -->
+  <!-- <script src="step-by-step/03.js"></script> -->
+  <!-- <script src="step-by-step/04.js"></script> -->
+</body>
+
+</html>

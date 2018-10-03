@@ -1,0 +1,10 @@
+{
+  "name": "bacon-dnd",
+  "version": "0.0.0",
+  "description": "Drag and Drop using HTML5 and Bacon.js",
+  "main": "index.html",
+  "repository": "https://github.com/fknussel/bacon-dnd.git",
+  "author": "Federico Knüssel <fknussel@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
