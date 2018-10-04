@@ -1,5 +1,10 @@
 const Bacon = window.Bacon;
 
+// If you think of a drag and drop implementation, there's really
+// three inputs that you care about: pointerdown, pointermove and pointerup.
+// So the first thing we are gonna do is create streams representing these events.
+// Bacon.fromEvent takes in an observable, in this case `window` and an event name.
+// Every time the `pointerdown` event is fired on the window, that event will go into the stream.
 const pointerDownStream = Bacon.fromEvent(window, 'pointerdown');
 const pointerMoveStream = Bacon.fromEvent(window, 'pointermove');
 const pointerUpStream = Bacon.fromEvent(window, 'pointerup');
@@ -9,13 +14,29 @@ pointerDownStream
   .flatMap(cardOffsetStream)
   .onValue(updateBoard);
 
+// What we really want is our pointerdown events where we moused down over a card.
+// We filter out those pointerdown events on anything other than a card.
 function onlyPointerDownsOnCards(pointerDownEvent) {
   return pointerDownEvent.target.matches('.board__card');
 }
 
+// `map` returns an observable containing one object: the event object.
+// `flatMap` also returns an observable containing one object: this object being an observable.
+// If we didn't use `flatMap`, this would return an observable containing one object,
+// but that object wouldn't be the offsets data object we need, rather another observable of our data object,
+// ie: that will give us an observable containing an observable containing a data object.
+// We need `flatMap` b/c our `cardOffsetStream` doesn't return a data object, rather an observable of our data object.
 function cardOffsetStream(pointerDownEvent) {
+  // What we really wanna know is which issue is being moved. Here we get the card ID that we moused down on.
   const cardId = pointerDownEvent.target.dataset.id;
 
+  // Once we have the pointerdown events on cards, we want to map that to a stream of pointermove events.
+  // And we wanna take values from that pointermove stream until the next pointerup event.
+  // What flatMap does is it takes a function whose argument is the event from the stream you are mapping from,
+  // in this case it's a pointerdown event, and what it needs to return is a stream,
+  // in this case we'll be returning the pointermove event.
+  // But we don't want all the pointermove events, we just wanna take them until the next pointerup event.
+  // We map these into a stream of objects that contain a card ID. We also need to figure out how far we've moved it.
   return pointerMoveStream
     .takeUntil(pointerUpStream)
     .merge(pointerUpStream.first())
